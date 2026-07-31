@@ -26,8 +26,11 @@
   //   → 원격 <remotePath>/layout/basic/navigation.html
   "remotePath": "/sde_design/skin14",
 
-  // 저장 시 자동 업로드 — 동기화 테스트 통과 전까지 반드시 false
-  "uploadOnSave": false,
+  // 저장 시 자동 업로드.
+  // true 로 두면 VS Code 에서 Ctrl+S 하는 순간 실서버에 반영된다.
+  // 웹FTP 클릭 노동이 사라지는 대신, 오타도 즉시 나간다는 뜻이다.
+  // 커밋 전 확인이 필요하면 false 로 두고 우클릭 > Upload 를 쓸 것.
+  "uploadOnSave": true,
 
   // 스킨과 무관한 저장소 파일들이 올라가지 않도록 차단
   "ignore": [

@@ -142,13 +142,85 @@ ReSLBS 페이지에서 그 메뉴가 SHOP **앞으로 이동**하면서 첫 매�
 
 ---
 
-## 반영 절차
+## 배포
 
-1. **백업 먼저.** 편집창의 현재 내용을 통째로 복사해 `backup/YYYY-MM-DD/` 에 저장하고 커밋
-2. `layout/basic/` 의 해당 파일 내용을 **전체 선택 → 편집창에 통째 교체**
-   (라인 단위 부분 편집은 괄호·주석이 깨지기 쉬움)
-3. 저장 후 **시크릿 창 + Ctrl+Shift+R** 로 확인. 캐시 시차로 몇 분 걸릴 수 있음
-4. 반영 안 보이면 `Ctrl+U` 소스에서 고유 문자열 검색 → 0건이면 저장/스킨/캐시 순으로 의심
+편집창·웹FTP를 쓰지 않습니다. **Git 이 원본이고, SFTP 로 밀어넣습니다.**
+
+### 경로
+
+```
+로컬  layout/basic/navigation.html
+원격  <REMOTE_PATH>/layout/basic/navigation.html
+      예) /sde_design/skin14/layout/basic/navigation.html
+```
+
+`skin14` 는 SLBS 의 `SKIN_CODE`. 스킨을 바꾸면 이 번호도 바뀝니다.
+
+### ① VS Code 에서 (일상 작업)
+
+1. 확장 `SFTP` (게시자 **Natizyskunk**) 설치
+2. `.vscode/sftp.json.example` → `sftp.json` 으로 복사 후 `host` / `username` / `remotePath` 채움
+3. 파일 저장 → 자동 업로드
+
+`sftp.json` 은 `.gitignore` 에 걸려 있어 커밋되지 않습니다. 비밀번호는 파일에 두지 말고
+`promptForPassword` 를 쓰세요.
+
+### ② GitHub Actions 에서 (자동 배포)
+
+`main` 브랜치의 `layout/**` 이 바뀌면 자동 배포됩니다.
+저장소 Settings › Secrets and variables › Actions 에 4개를 등록해야 합니다.
+
+| Secret | 값 |
+|---|---|
+| `CAFE24_FTP_HOST` | `쇼핑몰아이디.cafe24.com` |
+| `CAFE24_FTP_USER` | FTP 아이디 |
+| `CAFE24_FTP_PASS` | FTP 비밀번호 |
+| `CAFE24_REMOTE_PATH` | `/sde_design/skin14` |
+
+> GitHub 러너는 해외 IP입니다. 쇼핑몰 관리자 › 운영 보안 관리 › IP 접속 제한 설정의
+> **FTP 접속 지역**이 "국내+해외 접속 허용"이어야 동작합니다. 국내로 조이려면
+> Actions 대신 VS Code(①)나 국내 고정 IP self-hosted runner 를 쓰세요.
+
+### ③ 롤백
+
+파일 덮어쓰기가 아니라 **커밋 되돌리기**입니다.
+
+```bash
+# 방법 1 — 되돌리는 커밋을 새로 쌓기 (이력 보존, 권장)
+git revert <망친 커밋>
+git push          # → 자동 배포
+
+# 방법 2 — 특정 파일만 이전 상태로
+git checkout <좋았던 커밋> -- layout/basic/navigation.html
+git commit -m "Roll back navigation.html"
+git push
+```
+
+**방법 3 — 배포만 되돌리기 (커밋 없이):**
+Actions 탭 → `Deploy skin to Cafe24` → `Run workflow` → `ref` 에 되돌릴 커밋 SHA 입력.
+그 시점 파일이 그대로 다시 올라갑니다.
+
+`backup/` 폴더의 스냅샷을 편집창에 붙여넣는 수동 복구도 여전히 유효합니다.
+
+### ④ 검증
+
+배포 전에 `tools/validate_skin.py` 가 자동으로 돌며, 실패하면 업로드하지 않습니다.
+로컬에서도 같은 걸 돌릴 수 있습니다.
+
+```bash
+python3 tools/validate_skin.py layout/basic/*.html
+```
+
+검사 항목은 이 저장소에서 실제로 겪은 사고들입니다 — `<script>` 문법 오류, HTML 주석 짝,
+`<li>` 짝, CSS 가 `<script>` 안에 들어간 경우, GNB 메뉴 클래스 충돌.
+
+### ⑤ 배포 후
+
+시크릿 창 + **Ctrl+Shift+R**. 캐시 시차로 몇 분 걸릴 수 있습니다.
+반영이 안 보이면 `Ctrl+U` 소스에서 고유 문자열 검색 → 0건이면 경로/스킨번호/캐시 순으로 의심.
+
+> ⚠️ **편집창에서 직접 고치지 마세요.** 다음 배포 때 Git 내용으로 덮어써집니다.
+> 급해서 편집창에서 고쳤다면, 그 내용을 반드시 저장소에도 반영하세요.
 
 ## 편집 시 주의 (사고 이력 기반)
 

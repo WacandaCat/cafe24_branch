@@ -1,0 +1,90 @@
+name: Deploy skin to Cafe24
+
+# layout/ 아래 파일이 바뀌면 실서버 스킨으로 배포한다.
+# Cafe24 는 Git 을 지원하지 않으므로 SFTP 로 밀어넣는 방식이다.
+#
+# 롤백: Actions 탭 → 이 워크플로 → "Run workflow" → ref 에 되돌릴 커밋 SHA 입력.
+#       해당 시점 파일이 그대로 다시 올라간다. git revert 후 push 해도 된다.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'layout/**'
+      - '.github/workflows/deploy-skin.yml'
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: '배포할 커밋 SHA / 태그 / 브랜치 (비우면 기본 브랜치). 롤백은 여기에 이전 커밋 SHA 입력'
+        required: false
+        default: ''
+      dry_run:
+        description: '검증만 하고 업로드하지 않음'
+        type: boolean
+        default: false
+
+# 배포가 겹치면 스킨 파일이 반쯤 섞인 상태로 남을 수 있다. 직렬화한다.
+concurrency:
+  group: cafe24-skin-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 소스 체크아웃
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.ref || github.ref }}
+
+      - name: 배포 대상 확인
+        run: |
+          echo "커밋: $(git rev-parse HEAD)"
+          echo "메시지: $(git log -1 --pretty=%s)"
+          echo ""
+          echo "업로드할 파일:"
+          find layout -type f | sort
+
+      - name: 스킨 파일 검증
+        run: |
+          python3 tools/validate_skin.py $(find layout -name '*.html' | sort)
+
+      - name: lftp 설치
+        if: ${{ github.event.inputs.dry_run != 'true' }}
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq lftp
+
+      - name: SFTP 업로드
+        if: ${{ github.event.inputs.dry_run != 'true' }}
+        env:
+          FTP_HOST: ${{ secrets.CAFE24_FTP_HOST }}
+          FTP_USER: ${{ secrets.CAFE24_FTP_USER }}
+          FTP_PASS: ${{ secrets.CAFE24_FTP_PASS }}
+          REMOTE_PATH: ${{ secrets.CAFE24_REMOTE_PATH }}
+        run: |
+          set -euo pipefail
+          # --delete 는 절대 쓰지 않는다. 저장소가 추적하지 않는 원격 파일
+          # (top_roll.html, footer.html 등)이 지워진다.
+          lftp -c "
+            set sftp:auto-confirm yes;
+            set net:max-retries 3;
+            set net:timeout 20;
+            set xfer:clobber on;
+            open -u '$FTP_USER','$FTP_PASS' sftp://$FTP_HOST;
+            mirror --reverse --verbose --no-perms --ignore-time \
+                   ./layout/ '$REMOTE_PATH/layout/';
+            bye;
+          "
+
+      - name: 요약
+        if: always()
+        run: |
+          {
+            echo "### Cafe24 스킨 배포"
+            echo ""
+            echo "- 커밋: \`$(git rev-parse --short HEAD)\`"
+            echo "- 모드: ${{ github.event.inputs.dry_run == 'true' && '검증만 (dry run)' || '배포' }}"
+            echo ""
+            echo "배포 후 시크릿 창에서 **Ctrl+Shift+R** 로 확인하세요. 캐시 때문에 몇 분 걸릴 수 있습니다."
+          } >> "$GITHUB_STEP_SUMMARY"
