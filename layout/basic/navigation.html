@@ -1,0 +1,536 @@
+<div class="navigation">
+  <div class="icon--menu-wrap">
+    <div module="Layout_statelogoff">
+      <a href="/product/search.html"><i class="icon icon--search">Search</i></a>
+      <a href="/order/basket.html"><i class="icon icon--cart">Cart</i>
+        <span class="count {$basket_count_display|display} {$basket_count_display_class}"><span class="{$basket_count_class}">{$basket_count}</span></span></a>
+      <a href="/member/login.html"><i class="icon icon--login">Login</i></a>
+    </div>
+    <div module="Layout_stateLogon">
+      <a href="/product/search.html"><i class="icon icon--search">Search</i></a>
+      <a href="/order/basket.html"><i class="icon icon--cart">Cart</i>
+        <span class="count {$basket_count_display|display} {$basket_count_display_class}"><span class="{$basket_count_class}">{$basket_count}</span></span></a>
+      <a href="/myshop/index.html"><i class="icon icon--login">Login</i></a>
+    </div>
+  </div>
+  <button type="button" class="btnNav eNavFold">
+    <span class="text-menu">MENU</span>
+  </button>
+  <button type="button" class="btnNavClose">
+    <span class="text-menu">CLOSE</span>
+  </button>
+  <!--@js(/slbs/assets/js/header.js)-->
+  <div class="navigation__category">
+    <!--@css(/css/module/layout/category.css)-->
+    <ul>
+      <li id="category" module="Layout_category" class="has-info">
+        <a href="/product/list.html?cate_no=465">SHOP</a>
+        <ul class="ul--top-navigation">
+          <li><a href="{$link_product_list}">{$name_or_img_tag}</a></li>
+          <li><a href="{$link_product_list}">{$name_or_img_tag}</a></li>
+          <li><a href="{$link_product_list}">{$name_or_img_tag}</a></li>
+        </ul>
+      </li>
+
+      <!-- COLLECTION: E -->
+      <li class="has-info">
+        <a href="/slbs/pages/collection/collection.html">COLLECTION</a>
+        <ul class="ul--new">
+          <li class="main-item">
+            <ol></ol>
+            <a href="/slbs/pages/collection/collection.html" class="view-all">전체보기</a>
+          </li>
+        </ul>
+      </li>
+
+      <li>
+        <a href="/product/project-type-a.html?cate_no=246">SHOWROOM</a>
+      </li>
+      <!--- <li>
+        <a href="https://slbs.shop/slbs/pages/coming-soon.html">CUSTOM</a> --->
+      <li>
+        <a href="https://slbs.shop/product/list.html?cate_no=478">CUSTOM</a>
+      </li>
+
+      <!-- REFURBISH: 메뉴 복구 2026-07-31 (숨김 해제) -->
+      <li class="has-info">
+        <a href="/slbs/pages/campaign/event-re-all.html?cate_no=416">중고폰</a>
+        <ul class="ul--top-navigation">
+          <li class="main-item">
+            <ol>
+            <li id="refur-menu-buy"><a
+                  href="/slbs/pages/campaign/event-re-01.html?cate_no=416"><strong
+                  style="color:#00000">중고폰 살 때</strong></a></li>
+            <li id="refur-menu-sell"><a
+                  href="/slbs/pages/campaign/event-re-02.html?cate_no=448"><strong
+                  style="color:#00000">중고폰 팔 때</strong></a></li>
+            </ol>
+          </li>
+        </ul>
+      </li>
+
+      <li class="has-info">
+        <a href="/slbs/pages/about_us.html">BRAND</a>
+        <ul>
+          <li><a href="https://slashbslash.ai/Aboutus">브랜드 소개</a></li>
+          <li><a href="https://slashbslash.ai/Portfolio">SLBS 포트폴리오</a></li>
+          <li><a href="https://slashbslash.ai/contactus">CONTACT</a></li>
+        </ul>
+      </li>
+    </ul>
+    <div class="site-info invisible opacity-0">
+      <div class="site-info--text">SLBS is the mobile fashion accessory brand with new tech. Fashion in tech becomes more important than ever for people who want to express themselves.</div>
+      <div class="site-info--logo">
+        <img src="/web/upload/slbs/images/logo/slbs/logo-default.svg" class="light" alt="cxsmxs tm" /><img
+          src="/web/upload/slbs/images/logo/slbs/logo-default-white.svg"
+          class="dark hidden"
+          alt="cxsmxs tm"
+      />
+      </div>
+    </div>
+  </div>
+  <div class="navigation__util hidden">
+    <button type="button" class="menu btnSearch eSearch">검색</button>
+    <a href="/myshop/index.html" class="menu RW displaynone"> 마이쇼핑 </a>
+    <a href="/myshop/wish_list.html" class="menu RW displaynone"> 관심상품 </a>
+  </div>
+  <!--@js(/layout/basic/js/nav.js)-->
+
+</div>
+
+<!-- [SLBS PATCH] SHOP 3·4차 + COLLECTION 자동화 + 뱃지 (이 블록만 지우면 원상복구) -->
+<style>
+#category .ul--top-navigation .main-item > strong { display: block; }
+#category .slbs-toggle {
+  display: inline-block; margin-right: 6px; padding: 0 4px;
+  cursor: pointer; font-weight: normal; user-select: none; line-height: 1;
+}
+#category ol.slbs-sub { display: none; padding-left: 12px; }
+#category ol.slbs-sub.open { display: block; }
+#category ol.slbs-sub li a { font-size: 0.92em; opacity: 0.85; }
+#category .slbs-new {
+  display: inline-block; margin-left: 4px;
+  color: #ff2200; font-size: 9px; font-weight: bold;
+  vertical-align: super; line-height: 1;
+}
+/* ALL PRODUCT 메뉴 2단 분할 */
+#category .ul--top-navigation .main-item[data-patched] {
+  column-count: 2;
+  column-gap: 48px;
+}
+#category .ul--top-navigation .main-item[data-patched] > strong:first-child {
+  column-span: all;
+  margin-bottom: 12px;
+}
+#category .ul--top-navigation .main-item[data-patched] > strong,
+#category .ul--top-navigation .main-item[data-patched] > ol {
+  break-inside: avoid;
+}
+/* COLLECTION 메뉴 토글/서브목록 (PC) */
+.ul--new .slbs-toggle {
+  display: inline-block; margin-right: 6px; padding: 0 4px;
+  cursor: pointer; font-weight: normal; user-select: none; line-height: 1;
+}
+.ul--new ol.slbs-sub { display: none; padding-left: 12px; }
+.ul--new ol.slbs-sub.open { display: block; }
+.ul--new ol.slbs-sub li a { font-size: 0.92em; opacity: 0.85; }
+/* 모바일 사이드 메뉴 */
+.ul--side-navigation .slbs-sub { display: none; padding-left: 14px; }
+.ul--side-navigation .slbs-sub.open { display: block; }
+.ul--side-navigation .slbs-toggle {
+  display: inline-block; margin-right: 6px; padding: 2px 8px;
+  cursor: pointer; font-weight: normal; user-select: none;
+}
+li.menu.is-open { --h: auto !important; height: auto !important; max-height: none !important; }
+.ul--side-navigation .main-item ol li > a,
+.ul--side-navigation .main-item ol li > .slbs-toggle,
+.ul--side-navigation .main-item ol li > .slbs-new {
+  display: inline-block !important;
+  width: auto !important;
+  vertical-align: middle;
+}
+.ul--side-navigation .slbs-toggle { margin-right: 8px; }
+.ul--side-navigation .slbs-new {
+  color: #ff2200 !important;
+  font-size: 9px !important;
+  font-weight: bold !important;
+  vertical-align: super !important;
+  line-height: 1 !important;
+  margin-left: 4px;
+}
+/* 모바일: 한글 단어 단위 줄바꿈 + 크기 정돈 */
+.ul--side-navigation .main-item ol li,
+.ul--side-navigation .main-item ol li > a {
+  word-break: keep-all !important;
+  white-space: normal !important;
+}
+.ul--side-navigation .slbs-sub li > a { font-size: 0.88em !important; }
+.ul--side-navigation .slbs-sub { padding-left: 10px; }
+.ul--side-navigation .slbs-toggle { vertical-align: baseline !important; }
+/* PRSM CASE 볼드 */
+#category .ul--top-navigation a[href*="cate_no=388"],
+#category .ul--top-navigation a[href*="/388/"] { font-weight: bold !important; }
+/* 최상위 메뉴 뱃지(SHOWROOM 등) — 위치 제약 없이 적용 */
+.slbs-new {
+  display: inline-block !important;
+  color: #ff2200 !important;
+  font-size: 9px !important;
+  font-weight: bold !important;
+  vertical-align: super !important;
+  line-height: 1 !important;
+  margin-left: 4px;
+  width: auto !important;
+  height: auto !important;
+  white-space: nowrap;
+  overflow: visible !important;
+}
+.navigation__category > ul > li { overflow: visible !important; }
+/* SHOWROOM 뱃지: 모바일만 노출 (PC GNB 숨김) */
+.navigation__category > ul > li > .slbs-new { display: none !important; }
+/* COLLECTION 그룹 제목 볼드 + 세부 항목 위계 */
+.ul--new .main-item > ol > li > a { font-weight: bold !important; }
+.ul--new ol.slbs-sub li a { font-size: 0.92em; opacity: 0.85; }
+/* COLLECTION 메뉴 2단 분할 */
+.ul--new .main-item {
+  column-count: 2;
+  column-gap: 48px;
+}
+.ul--new .main-item > ol > li {
+  break-inside: avoid;
+}
+/* 모바일에서는 COLLECTION 1단으로 */
+@media (max-width: 1024px) {
+  .ul--new .main-item { column-count: 1 !important; }
+}
+</style>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var retry = 0;
+    // 분류 번호별 뱃지: '분류번호': '표시 단어'
+         var BADGE_MAP = {
+      '468': 'NEW',        // Samsung
+      '474': 'NEW',        // Z 시리즈
+      '458': 'NEW',        // Z Flip8
+      '459': 'NEW',        // Z Fold8
+      '460': 'NEW',        // Z Fold8 Ultra
+      '394': 'NEW',        // S26 Series
+      '349': 'NEW',        // 아이폰 17 Series
+      '388': 'Signature',  // PRSM (SHOP 메뉴)
+      '450': 'SALE',       // 방수팩
+      '485': 'NEW',        // Impression
+      '486': 'NEW',        // Monoline
+      '489': 'HOT',        // Sanrio
+      '492': 'HOT'         // Pokémon
+    };
+    // 최상위 메뉴 뱃지: '메뉴 텍스트': '표시 단어'
+    var MENU_BADGE = {
+      'SHOWROOM': 'Click Here!'
+    };
+  function getCateNo(a) {
+    var m = (a.getAttribute('href') || '').match(/\/(\d+)\/?$/);
+    if (m) return m[1];
+    m = (a.getAttribute('href') || '').match(/cate_no=(\d+)/);
+    return m ? m[1] : null;
+  }
+function addNewBadge(el, no) {
+    if (BADGE_MAP[no]) {
+      var nb = document.createElement('span');
+      nb.className = 'slbs-new';
+      nb.textContent = BADGE_MAP[no];
+      el.appendChild(nb);
+    }
+  }
+  function makeSubOl(kids) {
+    var ol = document.createElement('ol');
+    ol.className = 'slbs-sub';
+    kids.forEach(function (k) {
+      var li = document.createElement('li');
+      var a = document.createElement('a');
+      a.href = '/product/list.html?cate_no=' + k.no;
+      a.textContent = k.name;
+      li.appendChild(a);
+        addNewBadge(li, k.no);
+      ol.appendChild(li);
+    });
+    return ol;
+  }
+
+  function attachToggle(li, subOl) {
+    var btn = document.createElement('span');
+    btn.className = 'slbs-toggle';
+    btn.textContent = '+';
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      var isOpen = subOl.classList.toggle('open');
+      btn.textContent = isOpen ? '\u2212' : '+'; // − / +
+    });
+    li.insertBefore(btn, li.firstChild);
+    li.appendChild(subOl);
+  }
+
+  function apply(subMap) {
+    var menu = document.querySelector('#category .ul--top-navigation');
+    if (!menu) return false;
+
+    var target = null;
+    menu.querySelectorAll('.main-item > strong > a').forEach(function (a) {
+      if (getCateNo(a) === '465') target = a;
+    });
+    if (!target) return false;
+
+    var mainItem = target.closest('.main-item');
+    var ol = mainItem.querySelector('ol');
+    if (!ol || mainItem.getAttribute('data-patched')) return false;
+
+    var frag = document.createDocumentFragment();
+    var looseOl = null;
+
+    Array.prototype.slice.call(ol.children).forEach(function (li) {
+      var a = li.querySelector('a');
+      var no = a ? getCateNo(a) : null;
+      var kids = (no && subMap[no]) ? subMap[no] : null;
+
+      if (kids && kids.length) {
+        // 2차: 제목으로 승격
+        var st = document.createElement('strong');
+        st.appendChild(a.cloneNode(true));
+        addNewBadge(st, no);
+        var newOl = document.createElement('ol');
+
+        kids.forEach(function (k) {
+          var kli = document.createElement('li');
+          var ka = document.createElement('a');
+          ka.href = '/product/list.html?cate_no=' + k.no;
+          ka.textContent = k.name;
+          kli.appendChild(ka);
+          addNewBadge(kli, k.no);
+
+          // 4차: 3차에 자식이 있으면 + 버튼과 접힌 목록 부착
+          var grandKids = subMap[k.no];
+          if (grandKids && grandKids.length) {
+            attachToggle(kli, makeSubOl(grandKids));
+          }
+          newOl.appendChild(kli);
+        });
+
+        frag.appendChild(st);
+        frag.appendChild(newOl);
+        looseOl = null;
+      } else {
+        if (!looseOl) { looseOl = document.createElement('ol'); frag.appendChild(looseOl); }
+        looseOl.appendChild(li);
+      }
+    });
+
+    ol.parentNode.replaceChild(frag, ol);
+    mainItem.setAttribute('data-patched', 'true');
+    // 메뉴 전체(ALL PRODUCT 바깥 포함)에 뱃지 적용
+    menu.querySelectorAll('a').forEach(function (anchor) {
+      var cno = getCateNo(anchor);
+      if (!cno || !BADGE_MAP[cno]) return;
+      var parent = anchor.parentNode;
+      if (parent.querySelector('.slbs-new')) return; // 이미 붙어 있으면 건너뜀
+      var nb = document.createElement('span');
+      nb.className = 'slbs-new';
+      nb.textContent = BADGE_MAP[cno];
+      anchor.insertAdjacentElement('afterend', nb);
+    });
+    return true;
+  }
+
+  function applyMobile(subMap) {
+    var menu = document.querySelector('.ul--side-navigation');
+    if (!menu) return false;
+
+    var target = null;
+    menu.querySelectorAll('.main-item > strong > a').forEach(function (a) {
+      if (getCateNo(a) === '465') target = a;
+    });
+    if (!target) return false;
+
+    var mainItem = target.closest('.main-item');
+    var ol = mainItem.querySelector('ol');
+    if (!ol || mainItem.getAttribute('data-patched')) return false;
+
+    Array.prototype.slice.call(ol.children).forEach(function (li) {
+      var a = li.querySelector('a');
+      var no = a ? getCateNo(a) : null;
+      if (!no) return;
+      addNewBadge(li, no);
+      var kids = subMap[no];
+      if (kids && kids.length) {
+        var subOl = makeSubOl(kids);
+        kids.forEach(function (k, idx) {
+          var grandKids = subMap[k.no];
+          if (grandKids && grandKids.length) {
+            attachToggle(subOl.children[idx], makeSubOl(grandKids));
+          }
+        });
+        attachToggle(li, subOl);
+      }
+    });
+
+    mainItem.setAttribute('data-patched', 'true');
+    return true;
+  }
+
+ function applyCollection(subMap) {
+    var kids = subMap['472'];
+    var OPEN_BY_DEFAULT = ['473', '488', '491'];      // SLBS + Sanrio + Pokemon
+    if (!kids || !kids.length) return false;
+    var done = false;
+
+    // COLLECTION 메뉴만 정확히 찾기 (중고폰 등 다른 ul--new 제외)
+    var boxes = [];
+    document.querySelectorAll('li').forEach(function (menuLi) {
+      var topLink = menuLi.querySelector(':scope > a');
+      if (!topLink) return;
+      if (topLink.textContent.trim() !== 'COLLECTION') return;
+      var b = menuLi.querySelector('.ul--new .main-item');
+      if (b) boxes.push(b);
+    });
+
+    boxes.forEach(function (box) {
+      if (box.getAttribute('data-col-patched')) return;
+      var ol = box.querySelector('ol');
+      if (!ol) return;
+
+      var newOl = document.createElement('ol');
+      kids.forEach(function (grp) {
+        var li = document.createElement('li');
+        var a = document.createElement('a');
+        a.href = '/product/list.html?cate_no=' + grp.no;
+        a.textContent = grp.name;
+        li.appendChild(a);
+        addNewBadge(li, grp.no);
+
+        var subKids = subMap[grp.no];
+        if (subKids && subKids.length) {
+          var subOl = document.createElement('ol');
+          subOl.className = 'slbs-sub';
+          subKids.forEach(function (k) {
+            var kli = document.createElement('li');
+            var ka = document.createElement('a');
+            ka.href = '/product/list.html?cate_no=' + k.no;
+            ka.textContent = k.name;
+            kli.appendChild(ka);
+            addNewBadge(kli, k.no);
+            subOl.appendChild(kli);
+          });
+          attachToggle(li, subOl);
+          if (OPEN_BY_DEFAULT.indexOf(grp.no) > -1) {
+            subOl.classList.add('open');
+            var tg = li.querySelector('.slbs-toggle');
+            if (tg) tg.textContent = '\u2212'; // − 로 표시
+          }
+        }
+        newOl.appendChild(li);
+      });
+
+      ol.parentNode.replaceChild(newOl, ol);
+      box.setAttribute('data-col-patched', 'true');
+      done = true;
+    });
+    return done;
+  }
+
+  // 최상위 메뉴(PC GNB + 모바일)에 뱃지 적용 — 늦게, 반복 시도
+  (function menuBadgeLoop(n) {
+    document.querySelectorAll('.navigation__category > ul > li > a, #aside li.menu > a').forEach(function (a) {
+      var word = MENU_BADGE[a.textContent.trim()];
+      if (!word || a.parentNode.querySelector('.slbs-new')) return;
+      var nb = document.createElement('span');
+      nb.className = 'slbs-new';
+      nb.textContent = word;
+      a.insertAdjacentElement('afterend', nb);
+    });
+    if (n < 10) setTimeout(function () { menuBadgeLoop(n + 1); }, 500);
+  })(0);
+
+  $.ajax({
+    url: '/exec/front/Product/SubCategory',
+    dataType: 'json',
+    success: function (aData) {
+      if (!aData || !aData.length) return;
+      // 페이지 제목의 분류명을 현재 분류로 교체
+      var titleEl = document.getElementById('slbs-cate-name');
+      if (titleEl) {
+        var mCate = location.href.match(/cate_no=(\d+)/) || location.pathname.match(/\/(\d+)\/?$/);
+        if (mCate) {
+          for (var t = 0; t < aData.length; t++) {
+            if (String(aData[t].cate_no) === mCate[1]) {
+              titleEl.textContent = aData[t].name;
+              break;
+            }
+          }
+        }
+      }
+      var subMap = {};
+      for (var i = 0; i < aData.length; i++) {
+        var p = aData[i].parent_cate_no;
+        var no = aData[i].cate_no;
+        var nm = aData[i].name;
+        if (!p || !no || !nm) continue;
+        if (!subMap[p]) subMap[p] = [];
+        subMap[p].push({ no: String(no), name: nm });
+      }
+      var doneP = false, doneM = false, doneC = false;
+      (function tryApply() {
+        if (!doneP) doneP = apply(subMap);
+        if (!doneM) doneM = applyMobile(subMap);
+        if (!doneC) doneC = applyCollection(subMap);
+        if (doneP && doneM && doneC) return;
+        if (retry++ < 20) setTimeout(tryApply, 300);
+      })();
+    }
+  });
+});
+</script>
+
+<!-- [SLBS PATCH ReSLBS] ReSLBS 전용 GNB: 중고폰을 SHOP 앞으로 이동 (이 블록만 지우면 원상복구) -->
+<script>
+(function () {
+  var p = location.pathname.toLowerCase();
+  var q = location.search;
+  var isReslbs =
+    p.indexOf('/reslbs.html') > -1 ||
+    p.indexOf('event-re-all.html') > -1 ||
+    (p.indexOf('event-re-01.html') > -1 && q.indexOf('cate_no=416') > -1) ||
+    (p.indexOf('event-re-02.html') > -1 && q.indexOf('cate_no=448') > -1) ||
+    (p.indexOf('/product/project.html') > -1 && q.indexOf('cate_no=448') > -1);
+  if (!isReslbs) return;  // 일반 페이지는 즉시 종료 → 메뉴 순서 그대로
+
+  document.documentElement.classList.add('slbs-reslbs');
+
+  document.addEventListener('DOMContentLoaded', function () {
+    // [PC] 레이아웃에 있는 중고폰 메뉴를 SHOP(#category) 앞으로 이동
+    var gnb = document.querySelector('.navigation__category > ul');
+    var shopLi = document.getElementById('category');
+    var reLink = document.querySelector('.navigation__category > ul > li > a[href*="event-re-all"]');
+    var reLi = reLink ? reLink.parentNode : null;
+    if (gnb && shopLi && reLi && reLi !== shopLi) {
+      reLi.id = 'slbs-reslbs-menu';
+      gnb.insertBefore(reLi, shopLi);
+    }
+
+    // [모바일] 중고폰 메뉴를 SHOP 앞으로 이동
+    // ※ 모바일 링크는 event-refurbishALL.html 로 PC(event-re-all.html)와 이원화되어 있어
+    //    슬라이딩(menu.html)의 li#refur-menu-mobile 을 우선 사용, 링크 매칭은 보조 수단
+    var mLi = document.getElementById('refur-menu-mobile')
+           || document.querySelector('#aside li.menu:has(> a[href*="refurbish"])')
+           || document.querySelector('#aside li.menu:has(> a[href*="event-re-all"])');
+    if (mLi) {
+      var mShop = null;
+      document.querySelectorAll('#aside li.menu > a').forEach(function (a) {
+        if (!mShop && a.textContent.trim().toUpperCase().indexOf('SHOP') === 0) {
+          mShop = a.closest('li.menu');
+        }
+      });
+      if (mShop && mShop.parentNode === mLi.parentNode) {
+        mLi.parentNode.insertBefore(mLi, mShop);
+      }
+    }
+  });
+})();
+</script>
