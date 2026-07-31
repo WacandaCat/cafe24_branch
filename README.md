@@ -23,10 +23,25 @@ backup/YYYY-MM-DD/     수정 전 원본 스냅샷 (복구용)
 
 | 저장소 경로 | Cafe24 편집창 표시명 | 역할 |
 |---|---|---|
+| `layout/basic/layout.html` | 공통 레이아웃 | `@import`로 조각 로드. 패치 없음 |
 | `layout/basic/navigation.html` | 레이아웃 (상단 메뉴) | PC GNB + `[SLBS PATCH]` 전체 (유일본) |
-| *(미보관)* | 레이아웃 (슬라이딩) | 모바일 햄버거 메뉴 (`/layout/basic/menu.html`) |
-| *(미보관)* | 공통 레이아웃 | `@import`로 조각 로드. 패치 없음 |
+| *(미보관)* | 레이아웃 (슬라이딩) | 모바일 햄버거 메뉴 → **`/layout/basic/sidebar.html`** |
 | `docs/SLBS_GNB_핸드오프_v2.md` | — | GNB 개편 인계 문서 (2026-07-30 작성) |
+
+`layout.html` 이 실제로 불러오는 조각은 다음과 같습니다. 파일명 확정의 근거입니다.
+
+```html
+<!--@import(/layout/basic/top_roll.html)-->
+<!--@import(/layout/basic/state_login.html)-->
+<!--@import(/layout/basic/navigation.html)-->   ← 상단 메뉴 (PC GNB + SLBS PATCH)
+<!--@import(/layout/basic/sidebar.html)-->      ← 모바일 슬라이딩 메뉴
+<!--@import(/layout/basic/footer.html)-->
+```
+
+> 📌 **핸드오프 문서 53행 정정**: 슬라이딩 파일을 `/layout/basic/menu.html` 로 기재하고 있으나,
+> `menu.html` 은 `layout.html` 어디에서도 import되지 않습니다. 실제 파일은 `sidebar.html` 입니다.
+> `[SLBS PATCH]` 가 쓰는 셀렉터가 `#aside li.menu`, `.ul--side-navigation` 인 것과도 일치합니다.
+> (같은 표 52행의 `navigation.html` 은 "추정" 표기였으나 import 목록으로 확정되었습니다.)
 
 ---
 
@@ -40,7 +55,7 @@ backup/YYYY-MM-DD/     수정 전 원본 스냅샷 (복구용)
 | 파일 | 작업 | 상태 |
 |---|---|---|
 | `layout/basic/navigation.html` | 주석 해제 + ReSLBS 스크립트 수정 | ✅ 완료 (**미배포**) |
-| `layout/basic/menu.html` (슬라이딩) | `<!-- REFURBISHED: 모바일 메뉴 숨김 2026-07-30 ... -->` 주석 해제 | ⬜ 미착수 (파일 미보관) |
+| `layout/basic/sidebar.html` (슬라이딩) | `<!-- REFURBISHED: 모바일 메뉴 숨김 2026-07-30 ... -->` 주석 해제 | ⬜ 미착수 (파일 미보관) |
 
 > `layout/basic/navigation.html` 은 **아직 실서버에 반영되지 않은 상태**입니다.
 > 현재 slbs.shop에 올라가 있는 것은 `backup/2026-07-31/navigation.original.html` 쪽입니다.
