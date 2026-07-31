@@ -53,19 +53,19 @@
       </li>
 
       <!-- REFURBISH: 메뉴 복구 2026-07-31 (숨김 해제) -->
+      <!-- ※ SHOP 메가메뉴와 같은 클래스(ul--top-navigation / main-item)를 쓰면
+              header.js 의 make() 가 SHOP 대신 이 메뉴를 재조립해 버린다.
+              ReSLBS 페이지에서 이 메뉴가 SHOP 앞으로 이동하면 첫 매칭이 뒤바뀌어
+              SHOP 메가메뉴가 통째로 죽으므로, BRAND 메뉴와 같은 평범한 <ul> 을 쓴다. -->
       <li class="has-info">
         <a href="/slbs/pages/campaign/event-re-all.html?cate_no=416">중고폰</a>
-        <ul class="ul--top-navigation">
-          <li class="main-item">
-            <ol>
-            <li id="refur-menu-buy"><a
-                  href="/slbs/pages/campaign/event-re-01.html?cate_no=416"><strong
-                  style="color:#00000">중고폰 살 때</strong></a></li>
-            <li id="refur-menu-sell"><a
-                  href="/slbs/pages/campaign/event-re-02.html?cate_no=448"><strong
-                  style="color:#00000">중고폰 팔 때</strong></a></li>
-            </ol>
-          </li>
+        <ul>
+          <li id="refur-menu-buy"><a
+                href="/slbs/pages/campaign/event-re-01.html?cate_no=416"><strong
+                style="color:#00000">중고폰 살 때</strong></a></li>
+          <li id="refur-menu-sell"><a
+                href="/slbs/pages/campaign/event-re-02.html?cate_no=448"><strong
+                style="color:#00000">중고폰 팔 때</strong></a></li>
         </ul>
       </li>
 

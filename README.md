@@ -89,6 +89,33 @@ ReSLBS 페이지: 중고폰이 SHOP 앞으로 이동 (PC/모바일 공통)
    그대로 두면 ReSLBS 페이지에서 메뉴가 2개로 중복됩니다.
    모바일 셀렉터도 `li#refur-menu-mobile` 우선으로 교체(링크 이원화 대응).
 
+### ⚠️ 클래스 충돌 — 최상위 메뉴에 `ul--top-navigation` / `main-item` 금지
+
+**증상**: ReSLBS 페이지에서만 SHOP 메가메뉴가 평면으로 나옴 (3·4차 미전개, 뱃지 없음).
+일반 페이지는 정상.
+
+**원인**: 외주 코드 `header.js` 의 `make()` 가 `.ul--top-navigation` 을 문서 전체에서 찾아
+**첫 매칭 하나만** 재조립한다. 중고폰 메뉴가 SHOP 과 같은 클래스를 쓰고 있었고,
+ReSLBS 페이지에서 그 메뉴가 SHOP **앞으로 이동**하면서 첫 매칭이 뒤바뀌었다.
+→ `make()` 가 중고폰 메뉴를 처리 → SHOP 에 `.main-item` 이 생기지 않음
+→ 그 위에 얹히는 `apply()` 도 통째로 무력화.
+
+**확인 방법** (콘솔):
+
+```js
+[...document.querySelectorAll('.navigation__category .main-item')]
+  .map(m => m.closest('.navigation__category > ul > li').querySelector('a').textContent.trim())
+// 정상: ["SHOP", "COLLECTION", ...]   /  고장: SHOP 이 빠져 있음
+```
+
+**규칙**: GNB 최상위 메뉴의 서브 `<ul>` 에는 `ul--top-navigation`(SHOP 전용) 과
+`ul--new`(COLLECTION 전용) 를 쓰지 말 것. 일반 메뉴는 BRAND 처럼 **클래스 없는 `<ul>`** 을 쓴다.
+`main-item` 도 `make()`/`apply()` 가 만드는 것이므로 손으로 넣지 않는다.
+
+> 핸드오프 문서 90행의 `.ul--new` 침범 사고와 **같은 패턴**이다.
+> 기존 ReSLBS 스크립트가 메뉴를 `createElement` 로 새로 만들면서 클래스 없는 `<ul>` 을
+> 쓴 것도 이 때문으로 보인다.
+
 ### 알려진 이슈
 
 - **PC/모바일 중고폰 링크 이원화** — PC `event-re-all.html` / 모바일 `event-refurbishALL.html`.
