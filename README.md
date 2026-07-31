@@ -66,12 +66,12 @@ backup/YYYY-MM-DD/     수정 전 원본 스냅샷 (복구용)
 ```
 PC:     SHOP · COLLECTION · SHOWROOM · CUSTOM · 중고폰 · BRAND
 모바일:  SHOWROOM · SHOP · COLLECTION · CUSTOM · BRAND · 중고폰
-ReSLBS 페이지: 중고폰이 SHOP 앞으로 이동 (PC/모바일 공통)
+ReSLBS 페이지도 동일 (2026-07-31부터 순서 변경 없음 — 아래 "DOM 순서 변경 금지" 참고)
 ```
 
 > PC는 CUSTOM과 BRAND 사이, 모바일은 BRAND 뒤입니다. 원본 마크업 위치를 그대로 살린
-> 결과이며, 통일하려면 `sidebar.html` 의 `li#refur-menu-mobile` 을 CUSTOM `<li>` 뒤로
-> 옮기면 됩니다.
+> 결과이며, 통일하려면 `sidebar.html` 의 `li#refur-menu-mobile` 위치를 마크업에서
+> 옮기면 됩니다. **JS로 옮기지 마세요.**
 
 ### sidebar.html 변경 내역 (원본 대비 1건)
 
@@ -88,6 +88,22 @@ ReSLBS 페이지: 중고폰이 SHOP 앞으로 이동 (PC/모바일 공통)
    레이아웃의 `<li>`를 **찾아서 이동**시키는 방식으로 변경. ①로 마크업이 살아났기 때문에
    그대로 두면 ReSLBS 페이지에서 메뉴가 2개로 중복됩니다.
    모바일 셀렉터도 `li#refur-menu-mobile` 우선으로 교체(링크 이원화 대응).
+
+### 🚫 GNB 최상위 `<li>` 를 JS로 옮기지 말 것
+
+외주 스킨 코드(`header.js` / `nav.js` / `slide_menu.js`, **수정 금지**)가 메뉴와 드롭다운
+패널을 **DOM 순서로 묶습니다.** `insertBefore` 등으로 최상위 `<li>` 를 옮기면 두 가지가
+동시에 깨집니다.
+
+1. `header.js` 의 `make()` 가 **첫 `.ul--top-navigation` 하나만** 재조립 → 순서가 바뀌면
+   엉뚱한 메뉴를 집어가고 SHOP 메가메뉴가 통째로 죽음
+2. hover 패널 인덱스가 한 칸씩 밀림 → **중고폰에 마우스를 올렸는데 SHOP 드롭다운이 뜸**
+
+2026-07-29~31 사이 ReSLBS 페이지에서 중고폰을 SHOP 앞으로 옮기는 기능이 있었고,
+위 두 증상이 그대로 재현되어 **2026-07-31 제거**했습니다. 되살리지 마세요.
+
+메뉴 순서를 바꿔야 하면 **마크업에서 `<li>` 위치를 옮기거나**, 페이지별로 달라야 하면
+**CSS(flex `order`)** 로 처리하세요. DOM 이동은 안 됩니다.
 
 ### ⚠️ 클래스 충돌 — 최상위 메뉴에 `ul--top-navigation` / `main-item` 금지
 

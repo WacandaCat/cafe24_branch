@@ -488,7 +488,7 @@ function addNewBadge(el, no) {
 });
 </script>
 
-<!-- [SLBS PATCH ReSLBS] ReSLBS 전용 GNB: 중고폰을 SHOP 앞으로 이동 (이 블록만 지우면 원상복구) -->
+<!-- [SLBS PATCH ReSLBS] ReSLBS 페이지 식별 클래스 부여 (이 블록만 지우면 원상복구) -->
 <script>
 (function () {
   var p = location.pathname.toLowerCase();
@@ -499,38 +499,16 @@ function addNewBadge(el, no) {
     (p.indexOf('event-re-01.html') > -1 && q.indexOf('cate_no=416') > -1) ||
     (p.indexOf('event-re-02.html') > -1 && q.indexOf('cate_no=448') > -1) ||
     (p.indexOf('/product/project.html') > -1 && q.indexOf('cate_no=448') > -1);
-  if (!isReslbs) return;  // 일반 페이지는 즉시 종료 → 메뉴 순서 그대로
+  if (!isReslbs) return;  // 일반 페이지는 즉시 종료
 
+  // ReSLBS 계열 페이지 전용 CSS 훅.
+  //
+  // ※ GNB 순서 변경(중고폰을 SHOP 앞으로 이동) 기능은 2026-07-31 제거됨. 되살리지 말 것.
+  //    외주 스킨 코드(header.js / nav.js / slide_menu.js)가 메뉴와 드롭다운 패널을
+  //    DOM 순서로 묶기 때문에 최상위 <li> 를 옮기면 아래 두 가지가 동시에 깨진다.
+  //      1) header.js 의 make() 가 첫 .ul--top-navigation 만 재조립 → SHOP 메가메뉴 사망
+  //      2) hover 패널 인덱스가 한 칸씩 밀림 → 중고폰에 올렸는데 SHOP 드롭다운이 뜸
+  //    순서를 꼭 바꿔야 하면 DOM 이동이 아니라 CSS(flex order)로 처리할 것.
   document.documentElement.classList.add('slbs-reslbs');
-
-  document.addEventListener('DOMContentLoaded', function () {
-    // [PC] 레이아웃에 있는 중고폰 메뉴를 SHOP(#category) 앞으로 이동
-    var gnb = document.querySelector('.navigation__category > ul');
-    var shopLi = document.getElementById('category');
-    var reLink = document.querySelector('.navigation__category > ul > li > a[href*="event-re-all"]');
-    var reLi = reLink ? reLink.parentNode : null;
-    if (gnb && shopLi && reLi && reLi !== shopLi) {
-      reLi.id = 'slbs-reslbs-menu';
-      gnb.insertBefore(reLi, shopLi);
-    }
-
-    // [모바일] 중고폰 메뉴를 SHOP 앞으로 이동
-    // ※ 모바일 링크는 event-refurbishALL.html 로 PC(event-re-all.html)와 이원화되어 있어
-    //    슬라이딩(menu.html)의 li#refur-menu-mobile 을 우선 사용, 링크 매칭은 보조 수단
-    var mLi = document.getElementById('refur-menu-mobile')
-           || document.querySelector('#aside li.menu:has(> a[href*="refurbish"])')
-           || document.querySelector('#aside li.menu:has(> a[href*="event-re-all"])');
-    if (mLi) {
-      var mShop = null;
-      document.querySelectorAll('#aside li.menu > a').forEach(function (a) {
-        if (!mShop && a.textContent.trim().toUpperCase().indexOf('SHOP') === 0) {
-          mShop = a.closest('li.menu');
-        }
-      });
-      if (mShop && mShop.parentNode === mLi.parentNode) {
-        mLi.parentNode.insertBefore(mLi, mShop);
-      }
-    }
-  });
 })();
 </script>
