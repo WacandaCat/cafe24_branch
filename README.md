@@ -25,7 +25,7 @@ backup/YYYY-MM-DD/     수정 전 원본 스냅샷 (복구용)
 |---|---|---|
 | `layout/basic/layout.html` | 공통 레이아웃 | `@import`로 조각 로드. 패치 없음 |
 | `layout/basic/navigation.html` | 레이아웃 (상단 메뉴) | PC GNB + `[SLBS PATCH]` 전체 (유일본) |
-| *(미보관)* | 레이아웃 (슬라이딩) | 모바일 햄버거 메뉴 → **`/layout/basic/sidebar.html`** |
+| `layout/basic/sidebar.html` | 레이아웃 (슬라이딩) | 모바일 햄버거 메뉴 (`<aside id="aside">`) |
 | `docs/SLBS_GNB_핸드오프_v2.md` | — | GNB 개편 인계 문서 (2026-07-30 작성) |
 
 `layout.html` 이 실제로 불러오는 조각은 다음과 같습니다. 파일명 확정의 근거입니다.
@@ -55,11 +55,28 @@ backup/YYYY-MM-DD/     수정 전 원본 스냅샷 (복구용)
 | 파일 | 작업 | 상태 |
 |---|---|---|
 | `layout/basic/navigation.html` | 주석 해제 + ReSLBS 스크립트 수정 | ✅ 완료 (**미배포**) |
-| `layout/basic/sidebar.html` (슬라이딩) | `<!-- REFURBISHED: 모바일 메뉴 숨김 2026-07-30 ... -->` 주석 해제 | ⬜ 미착수 (파일 미보관) |
+| `layout/basic/sidebar.html` | `REFURBISHED: 모바일 메뉴 숨김` 주석 해제 | ✅ 완료 (**미배포**) |
 
-> `layout/basic/navigation.html` 은 **아직 실서버에 반영되지 않은 상태**입니다.
-> 현재 slbs.shop에 올라가 있는 것은 `backup/2026-07-31/navigation.original.html` 쪽입니다.
+> ⚠️ 두 파일 모두 **아직 실서버에 반영되지 않은 상태**입니다.
+> 현재 slbs.shop에 올라가 있는 것은 `backup/2026-07-31/` 쪽입니다.
 > 배포 후 이 문단을 갱신하세요.
+
+복구 후 메뉴 구성:
+
+```
+PC:     SHOP · COLLECTION · SHOWROOM · CUSTOM · 중고폰 · BRAND
+모바일:  SHOWROOM · SHOP · COLLECTION · CUSTOM · BRAND · 중고폰
+ReSLBS 페이지: 중고폰이 SHOP 앞으로 이동 (PC/모바일 공통)
+```
+
+> PC는 CUSTOM과 BRAND 사이, 모바일은 BRAND 뒤입니다. 원본 마크업 위치를 그대로 살린
+> 결과이며, 통일하려면 `sidebar.html` 의 `li#refur-menu-mobile` 을 CUSTOM `<li>` 뒤로
+> 옮기면 됩니다.
+
+### sidebar.html 변경 내역 (원본 대비 1건)
+
+- `<!-- REFURBISHED: 모바일 메뉴 숨김 2026-07-30 ... -->` 주석 해제 (편집창 147·151행)
+- 152~155행의 `REFURBISHED BUY` 주석은 별개 건이므로 **그대로 유지**
 
 ### navigation.html 변경 내역 (원본 대비 3건)
 

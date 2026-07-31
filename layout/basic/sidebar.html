@@ -1,0 +1,220 @@
+<aside id="aside" module="layout_slidePackage">
+  <!--@css(/layout/basic/css/slideMenu.css)-->
+  <!--@js(/layout/basic/js/slide_menu.js)-->
+  <!--@js(/slbs/assets/js/slidebar.js)-->
+  <nav class="navigation-menu" role="navigation">
+    <div class="navigation-menu__member hidden">
+      <div module="Layout_statelogoff">
+        <a href="/member/agreement.html">Join</a>
+        <a href="/member/login.html">Login</a>
+        <a href="/order/basket.html" class="RTMI"
+          >Cart <span class="count {$basket_count_display|display} {$basket_count_display_class}">(<span class="{$basket_count_class}">{$basket_count}</span>)</span></a
+        >
+      </div>
+      <div module="Layout_stateLogon">
+        <a href="{$action_logout}" class="displaynone">Logout</a>
+        <a href="/myshop/index.html">My shop</a>
+        <a href="/order/basket.html" class="RTMI"
+          >Cart<span class="count {$basket_count_display|display} {$basket_count_display_class}">(<span class="{$basket_count_class}">{$basket_count}</span>)</span></a
+        >
+      </div>
+      <div module="Layout_SearchSide" class="aside__search">
+        <!--
+          $search_page = /product/search.html
+          $product_page = /product/detail.html
+        -->
+        <fieldset class="searchField">
+          <legend>Search</legend>
+          {$form.keyword}
+          <a href="#none" class="btnSearch"><img alt="search" type="image" src="//img.echosting.cafe24.com/skin/skin/product/ico_search.svg" /></a>
+          <input type="image" src="//img.echosting.cafe24.com/skin/skin/product/ico_search.svg" alt="Search" onclick="{$action_search_submit}" class="btnSearch actived" />
+        </fieldset>
+      </div>
+    </div>
+
+    <div module="Layout_BoardInfo" class="navigation-menu__board displaynone">
+      <ul>
+        <li class="menu"><a href="{$link_board_list}">{$board_name}</a> {$board_adult_icon}</li>
+        <li class="menu"><a href="{$link_board_list}">{$board_name}</a> {$board_adult_icon}</li>
+      </ul>
+    </div>
+
+    <div class="navigation-menu__board">
+      <ul class="categoryList">
+        <li class="menu" style="background: rgb(0,0,0);">
+          <a href="/product/project-type-a.html?cate_no=246" class="eff--string"><span class="splt" style="color: #fff">SHOWROOM</span></a>
+    </li>
+        <!--백업용 </li>
+        <li class="menu">
+          <a href="/slbs/pages/campaign/event-summer.html?cate_no=302" target="_blank"><color style="color: #3593db">CLEARANCE</a>
+      </li>  -->
+
+        <li class="menu">
+          <i class="btn-arrow"></i>
+          <a href="/product/list.html?cate_no=465">SHOP</a>
+          <ul class="sub-menu ul--side-navigation" module="layout_category">
+            <li id="cate{$cate_no}"><a href="{$link_product_list}">{$name}</a></li>
+            <li id="cate{$cate_no}"><a href="{$link_product_list}">{$name}</a></li>
+          </ul>
+        </li>
+
+        <!-- COLLECTION: E -->
+        <li class="menu">
+          <i class="btn-arrow"></i>
+          <a href="/slbs/pages/collection/collection.html">COLLECTION</a>
+          <ul class="sub-menu ul--side-navigation ul--new">
+            <li class="main-item">
+              <ol>
+               <li><li class="li-new"><a href="/product/project.html?cate_no=461"><strong>SLBS 임프레션</strong></a></li>
+                <li><li class="li-new"><a href="/product/project.html?cate_no=213"><strong>SLBS 모노라인</strong></a></li>
+               <li><li class="li-new"><a href="/product/project.html?cate_no=114"><strong>SANRIO</strong></a></li>
+               <li><li class="li-new"><a href="/product/project.html?cate_no=119"><strong>Pokémon</strong></a></li>
+               <li><li class="li-new"><a href="/product/project.html?cate_no=374"><strong>BEBE THE ORI</strong></a></li>
+               <li><a href="/product/project.html?cate_no=440"><strong>POMPOMPURIN</strong></a></li>
+                <li><a href="/product/project.html?cate_no=454">TOYSTORY5</a></li>
+                <li><a href="/product/project.html?cate_no=392">PRSM</a></li>
+         <!--  <li><a href="/product/project.html?cate_no=339">OWCS ASIA</a></li> -->
+         <!-- <li class="li-new"><a href="/product/project.html?cate_no=262"><strong style="color:#84b94a">CROCS</strong></a></li> -->
+                 <li><a href="/product/project.html?cate_no=271">SUPERMAN</a></li>
+                <li><a href="/product/project.html?cate_no=223">HERSHEY'S</a></li>
+                 <li><a href="/product/project.html?cate_no=261">We Bare Bears</a></li>
+                 <li><a href="/product/project.html?cate_no=224">Looney Tunes</a></li>
+          <!--    <li><a href="/product/project.html?cate_no=268">해태</a></li> -->
+                <li><a href="/product/project.html?cate_no=203">STICKY MONSTER LAB</a></li>
+                <li><a href="/product/project.html?cate_no=204">HARRY POTTER</a></li>
+                <li><a href="/product/project.html?cate_no=151">DISNEY</a></li>
+                <li><a href="/product/project.html?cate_no=162">TOM and JERRY</a></li>
+                <li><a href="/product/project.html?cate_no=160">THE SIMPSONS</a></li>
+                <li><a href="/product/project.html?cate_no=137">VOLTRON</a></li>
+              </ol>
+              <a href="/slbs/pages/collection/collection.html" class="view-all">전체보기</a>
+            </li>
+          </ul>
+        </li>
+        <li class="menu">
+         <!-- <a href="https://slbs.shop/slbs/pages/coming-soon.html" target="_blank">CUSTOM</a> -->
+          <a href="https://slbs.shop/product/list.html?cate_no=478" target="_blank">CUSTOM</a>
+        </li>
+        <!-- <li class="menu">
+          <i class="btn-arrow"></i>
+          <a href="/slbs/pages/campaign/campaign.html">COLLECTION</a>
+          <ul class="sub-menu ul--new">
+            <li class="main-item">
+              <strong><a href="/slbs/pages/campaign/campaign.html">콜라보레이션</a></strong>
+              <ol>
+                <li><a href="#">심슨</a></li>
+                <li><a href="#">스타워즈</a></li>
+                <li class="li-new"><a href="#">하리보</a></li>
+              </ol>
+            </li>
+            <li class="main-item">
+              <strong><a href="#">아티스트100</a></strong>
+              <ol>
+                <li><a href="#">옥근남</a></li>
+                <li><a href="#">베리킴</a></li>
+                <li><a href="#">베러댄알콜</a></li>
+                <li><a href="#">슈포러브</a></li>
+                <li><a href="#">오예슬</a></li>
+              </ol>
+              <a href="#" class="view-all">전체보기</a>
+            </li>
+          </ul>
+        </li> -->
+        <li class="menu">
+          <i class="btn-arrow"></i>
+          <a href="/slbs/pages/about_us.html"> BRAND </a>
+          <ul class="sub-menu">
+            <li><a href="https://slashbslash.ai/Aboutus">브랜드 소개</a></li>
+           <!--    <li><a href="/slbs/pages/about_us.html">브랜드 소개</a></li> -->
+           <li><a href="https://slashbslash.ai/Portfolio">NFC 테크 시스템</a></li>
+           <!--  <li><a href="/slbs/pages/coming-soon.html">NFC 테크 시스템</a></li>-->
+           <li><a href="https://slashbslash.ai/contactus">CONTACT</a></li>
+           <!--     <li><a href="/slbs/pages/stocklist.html">CONTACT</a></li>    -->
+          </ul>
+        </li>
+        <!-- <li class="menu">
+          <i class="btn-arrow"></i>
+          <a href="#">SLBS CUSTOM</a>
+          <ul class="sub-menu">
+            <li><a href="#">HELLO KITTY</a></li>
+            <li><a href="#">HELVETICA</a></li>
+            <li><a href="#">THE SIMSONS</a></li>
+            <li><a href="#">STAR WARS</a></li>
+            <li><a href="#">MICKEY MOUSE</a></li>
+            <li><a href="#">COCA-COLA</a></li>
+          </ul>
+        </li> -->
+        <!-- REFURBISHED: 메뉴 복구 2026-07-31 (숨김 해제) -->
+        <li class="menu" id="refur-menu-mobile">
+          <a href="/slbs/pages/campaign/event-refurbishALL.html">중고폰</a>
+        </li>
+       <!-- REFURBISHED BUY: S
+        <li class="menu">
+        <a href="/slbs/pages/campaign/event-refurbish.html?cate_no=448">REFURBISHED BUY</a>
+      </li>  -->
+      </ul>
+    </div>
+    <div class="aside-menu-bottom">
+      <div module="Layout_statelogoff" class="hidden">
+        <ul>
+          <li><a href="/member/login.html">Login</a></li>
+          <li>
+            <a href="/order/basket.html" class="RTMI"
+              >Cart <span class="count {$basket_count_display|display} {$basket_count_display_class}"><span class="{$basket_count_class}">{$basket_count}</span></span></a
+            >
+          </li>
+        </ul>
+      </div>
+      <div module="Layout_stateLogon" class="navigation-menu__member__bottom hidden">
+        <ul>
+          <li><a href="/myshop/wish_list.html">Wishlist</a></li>
+          <li><a href="{$action_logout}">Logout</a></li>
+        </ul>
+      </div>
+      <ul>
+        <li><a href="https://npzz9.channel.io/" target="_blank">1:1 Q &amp; A</a></li>
+      </ul>
+    </div>
+    <div class="slogan">
+      <p>SLBS is the mobile fashion accessory brand with new tech. Fashion in tech becomes more important than ever for people who want to express themselves.</p>
+      <div class="mt-3 leading-[0]">
+        <img src="/web/upload/slbs/images/logo/slbs/logo-default.svg" class="light h-4 w-auto" alt="slbs tm" />
+        <img src="/web/upload/slbs/images/logo/slbs/logo-default-white.svg" class="dark h-4 w-auto" alt="slbs tm" />
+      </div>
+    </div>
+  </nav>
+  <button type="button" class="btnClose hidden" style="display: none"><i aria-hidden="true" class="icon icoClose"></i>닫기</button>
+  <div class="copyright">© 2026 SLBS</div>
+</aside>
+
+<script src="https://www.unpkg.com/spltjs@1.1.0"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", (event) => {
+    splt({});
+
+    const animation = anime({
+      targets: '.char',
+			opacity: [0.1, 1],
+      direction: 'alternate',
+			easing: 'easeInOutSine',
+      loop: true,
+      autoplay: false,
+      delay: anime.stagger(50),
+    });
+
+    const box = document.getElementById('main');
+    const observer = new MutationObserver(mutations => {
+      mutations.forEach(mutation => {
+        if (mutation.attributeName === 'class') {
+          if (box.classList.contains('expand')) {
+            animation.play();
+          } else {
+            animation.pause();
+          }
+        }
+      });
+    });
+    observer.observe(box, { attributes: true });
+  });
+</script>
